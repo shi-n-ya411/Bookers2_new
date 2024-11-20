@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @books = @user.books
+    @books = current_user.books # ログイン中のユーザーの Book を取得
   end
 
   def edit

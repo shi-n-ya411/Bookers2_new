@@ -1,14 +1,26 @@
 <div>
-  <p>User info</p>
+  <h1>User info</h1>
   <div>
     <%= link_to image_tag(user.get_profile_image(100, 100)), user_path(user) %>
-    <h3><%= user.name %></h3>
-    <h3><%= user.introduction %></h3>
+    <table>
+      <thead>
+        <tr>
+          <th><h3>name</h3></th>
+          <th><h3><%= user.name %></h3></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th><h3>introduction</h3></th>
+          <th><h3><%= user.introduction %></h3></th>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <%= link_to edit_user_path(user), class: "btn btn-outline-dark btn-block" do %>
     <i class="fa-solid fa-user-gear"></i>
   <% end %>
-  <p>New book</p>
+  <h1>New book</h1>
   <%= form_with model: book do |f| %>
     <p>Title</p>
     <%= f.text_field :title, class: "form-control" %>
