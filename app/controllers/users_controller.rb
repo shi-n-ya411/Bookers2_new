@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!  # ログインしたユーザーのみアクセスできるようにする
+
   def show
     @user = User.find(params[:id])
     @books = @user.books
@@ -6,4 +8,9 @@ class UsersController < ApplicationController
 
   def edit
   end
+
+  def index
+    @users = User.all  
+  end
+
 end

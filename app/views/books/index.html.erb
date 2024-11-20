@@ -1,2 +1,35 @@
-<h1>Books#index</h1>
-<p>Find me in app/views/books/index.html.erb</p>
+<div class="container-fluid">
+  <div class="row">
+    <!-- サイドバー -->
+    <div class="col-3">
+      <%= render partial: 'books/user_info', locals: { user: @user, book: Book.new } %>
+    </div>
+
+    <!-- メインコンテンツ -->
+    <div class="col-8 offset-1">
+      <p>Books</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Title</th>
+            <th scope="col">Opinion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @books.each do |book| %>
+          <tr>
+            <th>
+              <%= link_to image_tag(book.user.get_profile_image(100,100)), user_path(book.user) %>
+            </th>
+            <th>
+              <%= link_to book.title, book_path(book) %>
+            </th>
+            <th><%= book.body %></th>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,31 +7,85 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <script src="https://kit.fontawesome.com/b7d828489d.js" crossorigin="anonymous"></script>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
   <header>
-    <% if user_signed_in? %>
-      <li>
-      <%= link_to '投稿フォーム', new_post_image_path %>
-      </li>
-      <li>
-      <%= link_to 'マイページ', user_path(current_user.id) %>
-      </li>
-      <li>
-        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-      </li>
-    <% else %>
-      <li>
-        <%= link_to "新規登録", new_user_registration_path %>
-      </li>
-      <li>
-        <%= link_to "ログイン", new_user_session_path %>
-      </li>
-    <% end %>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+          <!-- Brand/Logo -->
+          <a class="navbar-brand" href="/">Bookers</a>
+
+          <!-- Toggle button for mobile view -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- Navbar links -->
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ms-auto">
+                <% if user_signed_in? %>
+                  <li class="nav-item">
+                    <%= link_to user_path(current_user.id), class: 'nav-link' do %>
+                        <i class="fas fa-home"></i> Home
+                    <% end %>
+                </li>
+                <li class="nav-item">
+                    <%= link_to users_path, class: 'nav-link' do %>
+                        <i class="fa-sharp fa-solid fa-users"></i> Users
+                    <% end %>
+                </li>
+                <li class="nav-item">
+                    <%= link_to books_path, class: 'nav-link' do %>
+                        <i class="fa-solid fa-book-open"></i> Books
+                    <% end %>
+                </li>
+                <li class="nav-item">
+                    <%= link_to destroy_user_session_path, method: :delete, class: 'nav-link' do %>
+                        <i class="fa-solid fa-right-from-bracket"></i> Log out
+                    <% end %>
+                </li>
+              </ul>
+          </div>
+      </div>
+          <% else %>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+              <%= link_to root_path, class: 'nav-link' do %>
+                  <i class="fas fa-home"></i> Home
+              <% end %>
+          </li>
+          <li class="nav-item">
+              <%= link_to about_path, class: 'nav-link' do %>
+                  <i class="fas fa-info-circle"></i> About
+              <% end %>
+          </li>
+          <li class="nav-item">
+              <%= link_to new_user_registration_path, class: 'nav-link' do %>
+                  <i class="fas fa-user-plus"></i> Sign up
+              <% end %>
+          </li>
+          <li class="nav-item">
+              <%= link_to new_user_session_path, class: 'nav-link' do %>
+                  <i class="fas fa-sign-in-alt"></i> Log in
+              <% end %>
+          </li>
+                  <% end %>
+              </ul>
+          </div>
+      </div>
+  </nav>
   </header>
     <%= yield %>
+
+    <footer class="text-center">
+      <div class="mt-5">CopyRightInfratop.inc</div>
+    </footer>
   </body>
 </html>
