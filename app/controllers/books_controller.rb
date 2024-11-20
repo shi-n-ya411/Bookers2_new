@@ -1,4 +1,7 @@
 class BooksController < ApplicationController
+  
+  
+  
   def new
     @book = Book.new
   end
@@ -17,9 +20,9 @@ class BooksController < ApplicationController
   end
 
   def show
-    @book = Book.find(params[:id]) # 特定のBookオブジェクトを取得
-    @user = @book.user # Bookオブジェクトに関連するUserを取得
-    @books = Book.all  # 全てのBookオブジェクトを取得
+    @book = Book.find(params[:id])
+    @user = @book.user
+    @books = current_user.books
   end
 
   def edit
