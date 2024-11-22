@@ -82,6 +82,16 @@
       </div>
   </nav>
   </header>
+  
+  <!-- フラッシュメッセージ -->
+    <div class="container mt-3">
+      <% flash.each do |key, message| %>
+        <div class="alert alert-<%= bootstrap_flash_class(key) %>" role="alert">
+          <%= message %>
+        </div>
+      <% end %>
+    </div>
+    
     <%= yield %>
 
     <footer class="text-center">

@@ -1,7 +1,35 @@
-<h1>Users List</h1>
+<div class="container-fluid">
+  <div class="row">
+    <!-- サイドバー -->
+    <div class="col-3">
+      <%= render partial: 'books/user_info', locals: { user: @user, book: Book.new } %>
+    </div>
 
-<ul>
-  <% @users.each do |user| %>
-    <li><%= user.email %></li>  <!-- メールアドレスなど、ユーザーの情報を表示 -->
-  <% end %>
-</ul>
+    <!-- メインコンテンツ -->
+    <div class="col-8 offset-1">
+      <h1>Users users index </h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Name</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+          <tr>
+            <th>
+              <%= image_tag user.get_profile_image(100,100) %>
+            </th>
+            <th>
+              <%= user.name %>
+            </th>
+            <th><%= link_to "show", user_path(user) %></th>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
