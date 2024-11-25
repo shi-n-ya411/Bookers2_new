@@ -1,3 +1,10 @@
+<% if flash[:alert].present? %>
+  <div id="error_explanation">
+    <h2>Error:</h2>
+    <p><%= flash[:alert] %></p>
+  </div>
+<% end %>
+
 <div class="container-fluid">
   <div class="row">
     <!-- サイドバー -->

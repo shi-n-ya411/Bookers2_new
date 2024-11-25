@@ -1,44 +1,31 @@
 class BooksController < ApplicationController
 
-
-
   def new
     @book = Book.new
   end
 
   def create
-    # @book = Book.new(book_params)
-    # @book.user_id = current_user.id
-    # @book.save
-    # redirect_to books_path
     @book = Book.new(book_params)
     @book.user_id = current_user.id
 
     if @book.save
-      flash[:notice] = "New book has been successfully created!" 
+      flash[:notice] = "New book has been successfully created!"
       redirect_to books_path
     else
-      flash[:alert] = "There was an error creating the book. Please try again." 
-      render :new
+      flash[:alert] = @book.errors.full_messages.join(", ")
+      redirect_to books_path
     end
   end
 
   def index
     @books = Book.all
     @user = current_user
-    # @book = Book.find(params[:id])
   end
 
   def show
-    # @book = Book.find(params[:id])
-    # @user = @book.user
-    # # @books = current_user.books
-    # @user = User.find(params[:id])  
-    # @books = @user.books           
+    @book = Book.find(params[:id])
+    @user = @book.user
 
-    @book = Book.find(params[:id]) 
-    @user = @book.user             
-    # @books = Book.all
   end
 
   def edit
@@ -50,8 +37,9 @@ class BooksController < ApplicationController
     if @book.update(book_params)
       redirect_to book_path(@book), notice: 'Book was successfully updated.'
     else
-      flash.now[:alert] = 'Failed to update the book.'
-      render :edit, status: :unprocessable_entity
+      # flash.now[:alert] = 'Failed to update the book.'
+      # render :edit, status: :unprocessable_entity
+      render :edit
     end
   end
 
