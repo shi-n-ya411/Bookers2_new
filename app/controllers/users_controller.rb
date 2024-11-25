@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!  # ログインしたユーザーのみアクセスできるようにする
+before_action :is_matching_login_user, only: [:edit, :update]
 
   def show
     @user = User.find(params[:id])
@@ -8,20 +8,20 @@ class UsersController < ApplicationController
   end
 
   def edit
-    user = User.find(params[:id])
-    unless user.id == current_user.id
-      redirect_to books_path
-    end
-    
+    # user = User.find(params[:id])
+    # unless user.id == current_user.id
+    #   redirect_to books_path
+    # end
+
     @user = User.find(params[:id])
   end
 
   def update
-    user = User.find(params[:id])
-    unless user.id == current_user.id
-      redirect_to books_path
-    end
-    
+    # user = User.find(params[:id])
+    # unless user.id == current_user.id
+    #   redirect_to books_path
+    # end
+
     @user = User.find(params[:id])
     if @user.update(user_params)
       redirect_to @user, notice: 'Your account has been updated successfully.'
@@ -33,6 +33,8 @@ class UsersController < ApplicationController
   def index
     @users = User.all
     @user = current_user
+    # @user = User.find(params[:id])
+    # @books = Book.includes(:user).all
   end
 
   private
@@ -41,4 +43,10 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :email, :profile_image, :introduction)
   end
 
+  def is_matching_login_user
+  user = User.find(params[:id])
+    unless user == current_user
+      redirect_to user_path(current_user)
+    end
+  end
 end

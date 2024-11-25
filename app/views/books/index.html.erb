@@ -8,12 +8,12 @@
 <div class="container-fluid">
   <div class="row">
     <!-- サイドバー -->
-    <div class="col-3">
+    <div class="col-md-3">
       <%= render partial: 'books/user_info', locals: { user: @user, book: Book.new } %>
     </div>
 
     <!-- メインコンテンツ -->
-    <div class="col-8 offset-1">
+    <div class="col-md-8 offset-md-1">
       <h1>Books books index</h1>
       <table class="table">
         <thead>
@@ -27,7 +27,7 @@
           <% @books.each do |book| %>
           <tr>
             <th>
-              <%= link_to image_tag(book.user.get_profile_image(100,100)), user_path(@user.id) %>
+              <%= link_to image_tag(book.user.get_profile_image(100,100)), user_path(book.user) %>
             </th>
             <th>
               <%= link_to book.title, book_path(book) %>

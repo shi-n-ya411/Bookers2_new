@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
-
+  before_action :is_matching_login_user, only: [:edit, :update]
+ 
   def new
     @book = Book.new
   end
@@ -10,7 +11,7 @@ class BooksController < ApplicationController
 
     if @book.save
       flash[:notice] = "New book has been successfully created!"
-      redirect_to books_path
+      redirect_to book_path(@book)
     else
       flash[:alert] = @book.errors.full_messages.join(", ")
       redirect_to books_path
@@ -29,16 +30,23 @@ class BooksController < ApplicationController
   end
 
   def edit
+    # book = Book.find(params[:id])
+    # unless book.id == current_user.id
+    #   redirect_to books_path
+    # end
+  
     @book = Book.find(params[:id])
   end
 
   def update
     @book = Book.find(params[:id])
+    unless @book.user.id == current_user.id
+      redirect_to books_path
+    end
+    
     if @book.update(book_params)
       redirect_to book_path(@book), notice: 'Book was successfully updated.'
     else
-      # flash.now[:alert] = 'Failed to update the book.'
-      # render :edit, status: :unprocessable_entity
       render :edit
     end
   end
@@ -53,6 +61,13 @@ class BooksController < ApplicationController
 
   def book_params
     params.require(:book).permit(:title, :body, :caption)
+  end
+
+  def is_matching_login_user
+    book = Book.find(params[:id])
+    unless book.user_id == current_user.id
+      redirect_to books_path
+    end
   end
 
 end
